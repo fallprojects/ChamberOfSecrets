@@ -6,20 +6,20 @@ from django.contrib.auth.models import User
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = '__all__'
+        fields = ['name','date_created']
 
 
 class AccountRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ['name','last_name','phone']
+        fields = ['name','last_name','phone','role']
 
 class UserSerializer(serializers.ModelSerializer):
     account = AccountRegisterSerializer()
 
     class Meta:
         model = User
-        fields = ['username','password','account']
+        fields = ['username','password','account',]
 
     def create(self, validated_data):
         password = self.validated_data.get('password')
