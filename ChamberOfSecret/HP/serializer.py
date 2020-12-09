@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ['name','date_created']
+        fields = ['name','date_created','mark','text']
 
 
 class AccountRegisterSerializer(serializers.ModelSerializer):
