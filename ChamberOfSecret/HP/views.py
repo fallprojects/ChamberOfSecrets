@@ -17,12 +17,18 @@ class DocumentView(viewsets.ModelViewSet):
     serializer_class = DocumentSerializer
 
 class DocumentViewFilter(APIView):
-    
-    def get(self):
-        documents = Document.objects.all()
-        serializer = DocumentSerializer(documents)
 
-        return Response(serializer.data)
+    def get(self,request):
+        print(request.user.account.role)
+        if request.user.account.role == 'Cleaner':
+            docs = Document.objects.filter(mark='managers')
+            print(Document.objects.filter(mark=['all']))
+            serializer = DocumentSerializer(docs)
+            return Response(serializer.data)
+        elif request.user.account.role == 'Manager':
+            docs = Document.objects.all().filter(mark='managers')
+            serializer = DocumentSerializer(docs)
+            return Response(serializer.data)
 class AccountRegisterView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
